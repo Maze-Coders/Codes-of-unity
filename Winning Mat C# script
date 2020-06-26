@@ -1,0 +1,61 @@
+using UnityEngine;
+
+
+public class MatProperty : MonoBehaviour
+{
+    public Rigidbody rb;
+    public Transform mat;
+    public GameObject Person;
+    public GameObject spotLight;
+    public Light Light;
+    public GameObject[] level1scene1;
+
+    public float upwardForce = 1500;
+    bool check1 = true;
+    bool check2 = true;
+    bool check3 = true;
+    void Start()
+    {
+        rb.useGravity = false;
+    }
+    void Update()
+    {
+        if (mat.position.y > 115 && !check1)
+        {
+            check1 = true;
+            check2 = false;
+            //rb.Personstraints = RigidbodyPersonstraints.None;
+            rb.velocity = new Vector3(0, 0, 0);
+            //FindObjectOfType<gameManager>().Level1End();
+        }
+        if (!check2 && Person.transform.position.y < 113)
+        {
+            check2 = true;
+            //leve11scene1[0].SetActive(false);
+            level1scene1[1].SetActive(false);
+            level1scene1[2].SetActive(false);
+            level1scene1[3].SetActive(false);
+            level1scene1[4].SetActive(true);
+            //level1scene1[5].SetActive(true);
+            Light = level1scene1[0].GetComponent<Light>();
+            Light.intensity = 0.5f;
+            Light.color = Color.white;
+            spotLight.SetActive(true);
+        }
+    }
+    void OnCollisionEnter()
+    {
+        if (check1)
+        {
+            /*for (int i = 0; i < IW.Length; i++)
+            {
+                IW[i].SetActive(true);
+            }*/
+            rb.AddForce(0, upwardForce, 0);
+            Debug.Log("Player has jumped");
+            Debug.Log(Time.time);
+            check1 = false;
+        }
+
+    }
+}
