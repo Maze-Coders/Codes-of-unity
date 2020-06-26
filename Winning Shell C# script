@@ -1,0 +1,51 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class winningShell : MonoBehaviour
+{
+
+    public GameObject[] level1scene2;
+    public Light Light;
+    public Color myColor;
+
+    //public float T = 10.0f;
+    // Update is called once per frame
+    /*void Update()
+    {
+        if (level1scene2[4].transform.position.y < -203.7f)
+        {
+            //Destroy(level1scene2[2]);
+            level1scene2[1].SetActive(true);
+
+        }
+    }*/
+    void OnCollisionEnter()
+    {
+        Debug.Log("Collision Successful");
+
+        StartCoroutine(Iwait());
+
+
+        //Update();
+    }
+    IEnumerator Iwait()
+    {
+        yield return new WaitForSeconds(10.0f);
+        level1scene2[4].SetActive(false);
+        Light = level1scene2[3].GetComponent<Light>();
+        Light.intensity = 2.0f;
+        Light.color = myColor;
+
+        level1scene2[2].SetActive(true);
+        //level1scene2[5].SetActive(false);
+        //level1scene2[6].SetActive(false);
+        //level1scene2[7].SetActive(false);
+        //level1scene2[8].SetActive(false);
+        //level1scene2[0].SetActive(false);
+        Destroy(level1scene2[0]);
+        level1scene2[1].SetActive(true);
+    }
+}
+
+
