@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class MatProperty : MonoBehaviour
 {
+    //getting the required objects
     public Rigidbody rb;
     public Transform mat;
     public GameObject Person;
@@ -16,30 +17,39 @@ public class MatProperty : MonoBehaviour
     bool check3 = true;
     void Start()
     {
+        //disabling the gravity
         rb.useGravity = false;
     }
     void Update()
     {
+        //checking the position of the player and also stopping the mat 
         if (mat.position.y > 115 && !check1)
         {
             check1 = true;
             check2 = false;
-            //rb.Personstraints = RigidbodyPersonstraints.None;
+            
             rb.velocity = new Vector3(0, 0, 0);
-            //FindObjectOfType<gameManager>().Level1End();
+            
         }
         if (!check2 && Person.transform.position.y < 113)
         {
             check2 = true;
             //leve11scene1[0].SetActive(false);
+            
+            //disabling the level1 
             level1scene1[1].SetActive(false);
             level1scene1[2].SetActive(false);
             level1scene1[3].SetActive(false);
+            
+            //enabling the level2
             level1scene1[4].SetActive(true);
-            //level1scene1[5].SetActive(true);
+            
+            //Adjusting the lights 
             Light = level1scene1[0].GetComponent<Light>();
             Light.intensity = 0.5f;
             Light.color = Color.white;
+            
+            //giving the torch to the player
             spotLight.SetActive(true);
         }
     }
@@ -47,10 +57,7 @@ public class MatProperty : MonoBehaviour
     {
         if (check1)
         {
-            /*for (int i = 0; i < IW.Length; i++)
-            {
-                IW[i].SetActive(true);
-            }*/
+            //pushing the player up in the air
             rb.AddForce(0, upwardForce, 0);
             Debug.Log("Player has jumped");
             Debug.Log(Time.time);
